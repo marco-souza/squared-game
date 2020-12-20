@@ -1,0 +1,14 @@
+scripts:
+  start:
+    cmd: "deno run ./server/main.ts"
+    desc: "run app websocket"
+    watch: true
+
+watcher:
+  match: ["**/*.*"]
+  skip: ["*/.git/*"]
+  legacy: false
+
+allow:
+  - run
+  - net
