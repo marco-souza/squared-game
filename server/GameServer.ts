@@ -38,24 +38,24 @@ export class GameServer {
 
   private newConnectionHandler = (ws: WebSocket) => {
     logger.info("New connection");
-  }
+  };
 
   private messageHandler = (ws: WebSocket) =>
     (message: string) => {
       logger.info(message);
-      this.generateNewState()
-      this.broadcastMessage(this.getStateMessage())
+      this.generateNewState();
+      this.broadcastMessage(this.getStateMessage());
     };
 
   private updateState = (ws: WebSocket) =>
     () => {
       logger.info("state update", ws.state);
-    }
+    };
 
   private broadcastMessage(message: string) {
-    [...this.wss.clients].map(ws => {
-      ws.send(message)
-    })
+    [...this.wss.clients].map((ws) => {
+      ws.send(message);
+    });
   }
 
   private generateNewState() {
@@ -65,8 +65,8 @@ export class GameServer {
   private getStateMessage = () => {
     const event: GameEvent = {
       type: "state",
-      data: this.gameState
-    }
-    return JSON.stringify(event)
-  }
+      data: this.gameState,
+    };
+    return JSON.stringify(event);
+  };
 }

@@ -1,4 +1,5 @@
 import * as log from "https://deno.land/std@0.81.0/log/mod.ts";
+import { WebSocketState } from "https://deno.land/x/websocket@v0.0.5/lib/websocket.ts";
 import {
   GameAction,
   GameEvent,
@@ -6,7 +7,6 @@ import {
   MAX_RETRIES,
   Position,
   sleep,
-  SocketStateEnum,
   times,
 } from "./shared.ts";
 
@@ -40,7 +40,7 @@ export class GameClient {
 
   private async sendMessage(event: object) {
     for (const i in times(MAX_RETRIES)) {
-      if (this.socket.readyState === SocketStateEnum.OPEN) {
+      if (this.socket.readyState === WebSocketState.OPEN) {
         // if connection is open, send the message
         this.socket.send(JSON.stringify(event));
         return;
