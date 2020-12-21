@@ -24,4 +24,4 @@ aleph dev
 
 *** Build
 
-You can build the app as an static website with `aleph build`.
+You can build the app as an static website with ~aleph build~.
