@@ -1,0 +1,27 @@
+* A game about squares
+
+The main objective of this project is to study *WebSocket*, *Alpeh.js* and *Deno*.
+
+** Usage
+
+this project requires:
+
+- Deno - Modern JS/TS runtime
+- denon - Deno file watcher
+- aleph.js - React framework for Deno
+
+*** Dev Server
+
+To start the dev server, just run the below commands, each line in one separated terminal.
+
+#+BEGIN_SRC shell
+# term 1
+denon start
+
+# term 2
+aleph dev
+#+END_SRC
+
+*** Build
+
+You can build the app as an static website with `aleph build`.
