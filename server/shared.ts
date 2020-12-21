@@ -1,6 +1,6 @@
 export type GameEventNames = "state" | "collision";
 
-export type GameActionNames = "position";
+export type GameActionNames = "move-up" | "move-down" | "move-left" | "move-right";
 
 export interface Position {
   x: number;

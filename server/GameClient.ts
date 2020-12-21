@@ -1,5 +1,3 @@
-import * as log from "https://deno.land/std@0.81.0/log/mod.ts";
-import { WebSocketState } from "https://deno.land/x/websocket@v0.0.5/lib/websocket.ts";
 import {
   GameAction,
   GameEvent,
@@ -9,8 +7,6 @@ import {
   sleep,
   times,
 } from "./shared.ts";
-
-const logger = log.getLogger();
 
 export class GameClient {
   private socket: WebSocket;
@@ -24,44 +20,70 @@ export class GameClient {
   }
 
   /**
+   * close client
+   */
+  public close = () => {
+    this.socket.close();
+  }
+
+  /**
    * set event handler
    */
-  public on(eventName: GameEventNames, handler: Function) {
+  public on = (eventName: GameEventNames, handler: Function) => {
     this.eventHandlers[eventName] = handler;
   }
 
   /**
-   * send player position
+   * move down
    */
-  public async sendPosition(pos: Position) {
-    const event: GameAction = { type: "position", data: pos };
-    await this.sendMessage(event);
+  public moveDown = () => {
+    const event: GameAction = { type: "move-down" };
+    this.sendMessage(event);
   }
 
-  private async sendMessage(event: object) {
+  /**
+   * move up
+   */
+  public moveUp = () => {
+    const event: GameAction = { type: "move-up" };
+    this.sendMessage(event);
+  }
+
+  /**
+   * move left
+   */
+  public moveLeft = () => {
+    const event: GameAction = { type: "move-left" };
+    this.sendMessage(event);
+  }
+
+  /**
+   * move right
+   */
+  public moveRight = () => {
+    const event: GameAction = { type: "move-right" };
+    this.sendMessage(event);
+  }
+
+  private sendMessage = async (event: object) =>{
     for (const i in times(MAX_RETRIES)) {
-      if (this.socket.readyState === WebSocketState.OPEN) {
+      if (this.socket.readyState === 1) {
         // if connection is open, send the message
         this.socket.send(JSON.stringify(event));
         return;
       }
       await sleep(100);
     }
-    log.error("Error on send message");
-    log.error(event);
   }
 
   private registerHandlers = () => {
     this.socket.addEventListener("message", (event: MessageEvent) => {
-      logger.info("Message received");
-      logger.info(event.data);
       this.messageHandler(event.data);
     });
   };
 
   private messageHandler = (rawMessage: string) => {
     const parsedMessage: GameEvent = JSON.parse(rawMessage);
-    logger.debug(parsedMessage);
 
     // send event to handler
     const handler = this.eventHandlers[parsedMessage.type];
