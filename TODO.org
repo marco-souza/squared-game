@@ -1,0 +1,12 @@
+* Game
+** TODO Server [0/2]
+   - [X] state updates
+   - [X] create GameClient
+     + [X] Move player
+     + [X] Remove offline clients
+     + [ ] Broadcast colisions
+** TODO App [0/2]
+   - [X] GameClient
+     + [X] handle movement
+     + [ ] handle colisions
+   - [X] update states
